@@ -1,10 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import { UserController } from './controllers/index.js';
+import { UserController, ProjectsController } from './controllers/index.js';
 import { loginValidation } from './validations/authValidation.js';
 import handleValidationError from './utils/handleValidationError.js';
-
-const PORT = 5000;
+import { PORT } from './config.js';
 
 const app = express();
 
@@ -17,6 +16,8 @@ app.post(
   handleValidationError,
   UserController.login
 );
+
+app.get('/projects', ProjectsController.getAllProjects);
 
 app.listen(PORT, () => {
   console.log('SERVER STARTED ON PORT: ' + PORT);
