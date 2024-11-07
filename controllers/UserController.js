@@ -11,7 +11,6 @@ export const login = async (req, res) => {
         message: 'Invalid credentials',
       });
     }
-
   } catch (err) {
     console.error(err);
     // Send 500 for any unexpected errors

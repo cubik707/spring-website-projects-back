@@ -16,7 +16,8 @@
   "description": "",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.21.1"
+    "express": "^4.21.1",
+    "express-validator": "^7.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.14.0",
