@@ -5,7 +5,7 @@ export const getAllProjects = async (req, res) => {
   try {
     const projects = projectsData.map((project) => ({
       ...project,
-      image: `${SERVER_URL}/public/images/${project.image}`,
+      image: `${SERVER_URL}/images/${project.image}`,
     }));
 
     res.status(200).json(projects);
