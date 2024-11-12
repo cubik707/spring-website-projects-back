@@ -1,11 +1,12 @@
 import projectsData from '../data/projects-data.js';
-import { SERVER_URL } from '../config.js';
+
+const serverUrl = process.env.SERVER_URL;
 
 export const getAllProjects = async (req, res) => {
   try {
     const projects = projectsData.map((project) => ({
       ...project,
-      image: `${SERVER_URL}/images/${project.image}`,
+      image: `${serverUrl}/images/${project.image}`,
     }));
 
     res.status(200).json(projects);

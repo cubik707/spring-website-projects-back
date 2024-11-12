@@ -2,11 +2,12 @@ import express from 'express';
 import cors from 'cors';
 import {ProjectsController, UserController} from './controllers/index.js';
 import {loginValidation} from './validations/auth-validation.js';
-import handleValidationError from './utils/handle-validation-error.js';
-import checkAuth from './utils/check-auth.js';
-import {PORT} from './config.js';
-
+import handleValidationError from './middlewares/handle-validation-error.js';
+import checkAuth from './middlewares/check-auth.js';
+import 'dotenv/config'
 const app = express();
+
+const port = process.env.PORT;
 
 app.use(express.json());
 app.use(cors());
@@ -22,6 +23,6 @@ app.post(
 
 app.get('/projects', checkAuth, ProjectsController.getAllProjects);
 
-app.listen(PORT, () => {
-  console.log('SERVER STARTED ON PORT: ' + PORT);
+app.listen(port, () => {
+  console.log('SERVER STARTED ON PORT: ' + port);
 });
