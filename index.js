@@ -1,11 +1,14 @@
 import express from 'express';
 import cors from 'cors';
-import 'dotenv/config'
-import {ProjectsController, UserController} from './src/controllers/index.js';
-import {loginValidation} from './src/validations/auth-validation.js';
+import 'dotenv/config';
+import { ProjectsController, UserController } from './src/controllers/index.js';
+import {
+  loginValidation,
+  signupValidation,
+} from './src/validations/auth-validation.js';
 import handleValidationError from './src/middlewares/handle-validation-error.js';
 import checkAuth from './src/middlewares/check-auth.js';
-import {connectToDB} from "./src/config/db.js";
+import { connectToDB } from './src/config/db.js';
 const app = express();
 
 const port = process.env.PORT;
@@ -13,13 +16,19 @@ const port = process.env.PORT;
 app.use(express.json());
 app.use(cors());
 
-app.use(express.static('public'))
+app.use(express.static('public'));
 
 app.post(
   '/login',
   loginValidation,
   handleValidationError,
   UserController.login
+);
+app.post(
+  '/signup',
+  signupValidation,
+  handleValidationError,
+  UserController.signup
 );
 
 app.get('/projects', checkAuth, ProjectsController.getAllProjects);
