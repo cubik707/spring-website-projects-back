@@ -9,6 +9,7 @@ import {
 import handleValidationError from './src/middlewares/handle-validation-error.js';
 import checkAuth from './src/middlewares/check-auth.js';
 import { connectToDB } from './src/config/db.js';
+import * as TokenController from './src/controllers/token-controller.js';
 const app = express();
 
 const port = process.env.PORT;
@@ -30,6 +31,8 @@ app.post(
   handleValidationError,
   UserController.signup
 );
+
+app.post('/refreshToken', TokenController.refreshToken);
 
 app.get('/projects', checkAuth, ProjectsController.getAllProjects);
 
