@@ -34,8 +34,9 @@ app.post(
   handleValidationError,
   UserController.signup
 );
+app.get('/me', checkAuth, UserController.getMe);
 
-app.post('/refreshToken', TokenController.refreshToken);
+app.post('/refresh-token', TokenController.refreshToken);
 
 app.get('/projects', checkAuth, ProjectsController.getAllProjects);
 

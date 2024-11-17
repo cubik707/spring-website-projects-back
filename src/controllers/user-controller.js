@@ -53,3 +53,24 @@ export const signup = async (req, res) => {
     return res.status(500).json({ message: 'An unexpected error occurred' });
   }
 };
+
+export const getMe = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    if (!userId) {
+      return res.status(400).json({ message: 'User not authenticated' });
+    }
+
+    const user = await User.findByPk(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    return res.status(200).json(user);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'An unexpected error occurred' });
+  }
+};

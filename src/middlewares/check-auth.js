@@ -8,15 +8,15 @@ export default async (req, res, next) => {
       return res.status(403).json({ message: 'No token provided' });
     }
 
-    const userData = TokenService.validateAccessToken(token);
-
-    if (!userData) {
+    const {user} = TokenService.validateAccessToken(token);
+    console.log(user)
+    if (!user) {
       return res
         .status(401)
         .json({ message: 'Access token expired or invalid' });
     }
 
-    req.user = userData;
+    req.user = user;
     next();
   } catch (error) {
     console.error('Error during authentication:', error);
