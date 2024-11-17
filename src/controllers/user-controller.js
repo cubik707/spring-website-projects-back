@@ -8,10 +8,9 @@ export const login = async (req, res) => {
 
     const user = await User.findOne({ where: { username } });
 
-    const { accessToken, refreshToken } = generateTokens(user.id);
+    const { accessToken, refreshToken } = generateTokens(user);
 
     TokenService.setRefreshTokenCookie(res, refreshToken);
-
     return res.status(200).json({
       accessToken
     });
