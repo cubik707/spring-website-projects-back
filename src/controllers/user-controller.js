@@ -1,4 +1,5 @@
 import User from '../models/user.js';
+import {generateTokens} from "../services/token-service.js";
 
 export const login = async (req, res) => {
   try {
@@ -6,13 +7,12 @@ export const login = async (req, res) => {
 
     const user = await User.findOne({ where: { username } });
 
-    if (!user || user.password !== password) {
-      return res.status(401).json({
-        message: 'Invalid credentials',
-      });
-    }
+    const { accessToken, refreshToken } = generateTokens(user.id);
 
-    return res.status(200).json({ token: 'fake-token' });
+    return res.status(200).json({
+      accessToken,
+      refreshToken,
+    });
   } catch (err) {
     console.error(err);
     // Send 500 for any unexpected errors
@@ -39,10 +39,11 @@ export const signup = async (req, res) => {
       age,
     });
 
-    const token = 'fake-token';
+    const { accessToken, refreshToken } = generateTokens(newUser);
 
     return res.status(201).json({
-      token,
+      accessToken,
+      refreshToken,
       ...newUser.dataValues,
     });
   } catch (err) {
