@@ -1,5 +1,6 @@
 import User from '../models/user.js';
 import { generateTokens } from '../services/token-service.js';
+import * as TokenService from "../services/token-service.js";
 
 export const login = async (req, res) => {
   try {
@@ -9,9 +10,10 @@ export const login = async (req, res) => {
 
     const { accessToken, refreshToken } = generateTokens(user.id);
 
+    TokenService.setRefreshTokenCookie(res, refreshToken);
+
     return res.status(200).json({
-      accessToken,
-      refreshToken,
+      accessToken
     });
   } catch (err) {
     console.error(err);
@@ -41,9 +43,10 @@ export const signup = async (req, res) => {
 
     const { accessToken, refreshToken } = generateTokens(newUser);
 
+    TokenService.setRefreshTokenCookie(res, refreshToken);
+
     return res.status(201).json({
       accessToken,
-      refreshToken,
       ...newUser.dataValues,
     });
   } catch (err) {

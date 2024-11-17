@@ -35,3 +35,12 @@ export const validateAccessToken = (token) => {
     return null;
   }
 };
+
+export const setRefreshTokenCookie = (res, refreshToken) => {
+  res.cookie('refreshToken', refreshToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'strict',
+    maxAge: 15 * 24 * 60 * 60 * 1000,
+  });
+};
