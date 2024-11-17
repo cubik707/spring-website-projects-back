@@ -1,4 +1,4 @@
-import * as TokenService from "../services/token-service.js";
+import * as TokenService from '../services/token-service.js';
 
 export default async (req, res, next) => {
   try {
@@ -11,7 +11,9 @@ export default async (req, res, next) => {
     const userData = TokenService.validateAccessToken(token);
 
     if (!userData) {
-      return res.status(401).json({ message: 'Access token expired or invalid' });
+      return res
+        .status(401)
+        .json({ message: 'Access token expired or invalid' });
     }
 
     req.user = userData;
@@ -20,4 +22,4 @@ export default async (req, res, next) => {
     console.error('Error during authentication:', error);
     return res.status(500).json({ message: 'Internal server error' });
   }
-}
+};

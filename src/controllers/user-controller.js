@@ -1,5 +1,5 @@
 import User from '../models/user.js';
-import {generateTokens} from "../services/token-service.js";
+import { generateTokens } from '../services/token-service.js';
 
 export const login = async (req, res) => {
   try {
