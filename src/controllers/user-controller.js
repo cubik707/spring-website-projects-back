@@ -8,6 +8,18 @@ export const login = async (req, res) => {
 
     const user = await User.findOne({ where: { username } });
 
+    if (!user) {
+      return res.status(404).json({
+        message: 'No user found with this username',
+      });
+    }
+
+    if (user.password !== password) {
+      return res.status(401).json({
+        message: 'Invalid password',
+      });
+    }
+
     const { accessToken, refreshToken } = generateTokens(user.id);
 
     TokenService.setRefreshTokenCookie(res, refreshToken);
