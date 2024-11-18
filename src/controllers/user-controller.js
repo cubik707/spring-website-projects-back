@@ -8,7 +8,7 @@ export const login = async (req, res) => {
 
     const user = await User.findOne({ where: { username } });
 
-    const { accessToken, refreshToken } = generateTokens(user);
+    const { accessToken, refreshToken } = generateTokens(user.id);
 
     TokenService.setRefreshTokenCookie(res, refreshToken);
     return res.status(200).json({
@@ -40,13 +40,13 @@ export const signup = async (req, res) => {
       age,
     });
 
-    const { accessToken, refreshToken } = generateTokens(newUser);
+    const { accessToken, refreshToken } = generateTokens(newUser.id);
 
     TokenService.setRefreshTokenCookie(res, refreshToken);
 
     return res.status(201).json({
       accessToken,
-      ...newUser.dataValues,
+      user: {...newUser.dataValues} ,
     });
   } catch (err) {
     console.error(err);
@@ -56,7 +56,7 @@ export const signup = async (req, res) => {
 
 export const getMe = async (req, res) => {
   try {
-    const userId = req.user.id;
+    const userId = req.userId;
 
     if (!userId) {
       return res.status(400).json({ message: 'User not authenticated' });

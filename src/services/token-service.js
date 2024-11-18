@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
 
-export const generateTokens = (user) => {
-  const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, {
+export const generateTokens = (userId) => {
+  const accessToken = jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: '30m',
   });
-  const refreshToken = jwt.sign({ user }, process.env.REFRESH_TOKEN_SECRET, {
+  const refreshToken = jwt.sign({ userId }, process.env.REFRESH_TOKEN_SECRET, {
     expiresIn: '15d',
   });
 
@@ -19,7 +19,7 @@ export const refreshAccessToken = (refreshToken) => {
     );
 
     return jwt.sign(
-      { user: refreshDecoded.user },
+      { userId: refreshDecoded.userId },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: '30m' }
     );
@@ -30,7 +30,9 @@ export const refreshAccessToken = (refreshToken) => {
 
 export const validateAccessToken = (token) => {
   try {
-    return jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    const payload = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    console.log(payload);
+    return payload;
   } catch (e) {
     console.log(e)
     return null;
