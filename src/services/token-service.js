@@ -23,7 +23,7 @@ export const refreshAccessToken = (refreshToken) => {
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: '30m' }
     );
-  } catch (error) {
+  } catch {
     throw new Error('Invalid refresh token');
   }
 };

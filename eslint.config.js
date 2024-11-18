@@ -1,15 +1,28 @@
 import globals from "globals";
 import pluginJs from "@eslint/js";
+import prettierPlugin from "eslint-plugin-prettier";
+
 
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
-  {languageOptions: { globals: {...globals.browser, process: 'readonly'}}},
+  {
+    files: ["**/*.js"],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+        process: "readonly",
+      },
+    },
+  },
   pluginJs.configs.recommended,
   {
-    env:{
-      browser: true,
-      node: true,
-    }
-  }
+    plugins: {
+      prettier: prettierPlugin,
+    },
+    rules: {
+      "prettier/prettier": "warn",
+    },
+  },
 ];

@@ -7,7 +7,6 @@ export default async (req, res, next) => {
     if (!token) {
       return res.status(403).json({ message: 'No token provided' });
     }
-    debugger;
     const verifiedToken = TokenService.validateAccessToken(token);
     if (!verifiedToken) {
       return res
