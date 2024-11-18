@@ -10,11 +10,13 @@ import handleValidationError from './src/middlewares/handle-validation-error.js'
 import checkAuth from './src/middlewares/check-auth.js';
 import { connectToDB } from './src/config/db.js';
 import * as TokenController from './src/controllers/token-controller.js';
+import cookieParser from "cookie-parser";
 const app = express();
 
 const port = process.env.PORT;
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(cors({
   origin: process.env.REACT_APP_CLIENT_ORIGIN,
   credentials: true,

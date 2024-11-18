@@ -2,10 +2,10 @@ import jwt from 'jsonwebtoken';
 
 export const generateTokens = (userId) => {
   const accessToken = jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: '30m',
+    expiresIn: '10s',
   });
   const refreshToken = jwt.sign({ userId }, process.env.REFRESH_TOKEN_SECRET, {
-    expiresIn: '15d',
+    expiresIn: '30d',
   });
 
   return { accessToken, refreshToken };
@@ -30,9 +30,7 @@ export const refreshAccessToken = (refreshToken) => {
 
 export const validateAccessToken = (token) => {
   try {
-    const payload = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    console.log(payload);
-    return payload;
+    return jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
   } catch (e) {
     console.log(e)
     return null;
